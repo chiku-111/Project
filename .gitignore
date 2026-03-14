@@ -1,0 +1,9 @@
+node_modules/
+.npm-cache/
+cache/
+artifacts/
+
+.env
+coverage/
+typechain-types/
+dist/
