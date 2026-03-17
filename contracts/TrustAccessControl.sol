@@ -26,6 +26,13 @@ contract TrustAccessControl {
         uint8 oldTrust,
         uint8 newTrust
     );
+    //访问决策
+    event AccessDecision(
+        address indexed agent,
+        string actionType, //请求的操作类型, 暂定normal和sensitive
+        bool allowed,
+        uint8 trustScore
+    );
 
     modifier onlyAdmin() {
         require(msg.sender == admin, "Only admin can call this");
@@ -93,7 +100,8 @@ contract TrustAccessControl {
         }
 
         agents[agentAddr].trustScore = newTrust;
-        agents[agentAddr].interactionCount += 1; // 交互次数加一
+        // 交互次数加一
+        agents[agentAddr].interactionCount += 1; 
 
         // 记录 trust 更新和本次交互
         emit TrustUpdated(agentAddr, oldTrust, newTrust);
@@ -104,4 +112,27 @@ contract TrustAccessControl {
             agents[agentAddr].interactionCount
         );
     }
+    function canAccess(
+        address agentAddr,
+        string memory actionType //动态类型 要带memory
+    ) public returns (bool){
+        require(agents[agentAddr].registered, "Agent not registered"); //未注册直接报错
+
+        uint8 trust = agents[agentAddr].trustScore;
+        bool allowed;
+
+        //keccak256表示字节序列做哈希, 比较哈希值是否相等
+        if (keccak256(bytes(actionType)) == keccak256(bytes("sensitive"))){
+            allowed = trust >= 80;
+        }else if (keccak256(bytes(actionType)) == keccak256(bytes("normal"))){
+            allowed = trust >= 50;
+        }else{
+            revert("Unknown action type");//直接报错并回滚
+        }
+        //链上留下日志，便于审计
+        emit AccessDecision(agentAddr,actionType, allowed, trust); 
+        //调用者立即得到结果
+        return allowed; 
+    }
+    
 }
