@@ -6,14 +6,14 @@ export default defineConfig({
   solidity: {
     profiles: {
       default: {
-        version: "0.8.28"
-      }
-    }
+        version: "0.8.28",
+      },
+    },
   },
   networks: {
     hardhatMainnet: {
       type: "edr-simulated",
-      chainType: "l1"
-    }
-  }
+      chainType: "l1",
+    },
+  },
 });

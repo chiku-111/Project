@@ -2,15 +2,51 @@
 
 <p align="center"><strong>Solidity + Hardhat minimal research prototype</strong></p>
 
-[中文版说明](./README_zh.md)
+[Chinese Version](./README_zh.md)
 
 ## Overview
 
-This project presents a simple trust-aware smart contract prototype for agent-based access control. It is developed with Solidity and Hardhat.
+This project presents a simple trust-aware smart contract prototype for
+agent-based access control. It is developed with Solidity and Hardhat.
 
-The prototype demonstrates how interaction outcomes can be used to update trust scores, and how trust scores can be used to enforce layered access permissions. The system also records on-chain events to support basic auditability.
+The prototype demonstrates how interaction outcomes can be used to update
+trust scores, and how trust scores can be used to enforce layered access
+permissions. The system also records on-chain events to support basic
+auditability.
 
-This project is intended as a minimal research prototype rather than a production-ready system.
+This project is intended as a minimal research prototype rather than a
+production-ready system.
+
+## Design Tradeoffs
+
+- The current system is an admin-centered trust oracle.
+- The main goal is to demonstrate trust-based access logic.
+- It is not designed as decentralized governance or a production-grade
+  permission system.
+
+In the current contract, both agent registration and trust updates are
+performed by the admin. That centralization is intentional for this prototype
+because the focus is the trust evaluation flow, not decentralized
+coordination.
+
+## Limitations
+
+This prototype has several intentional limitations.
+
+- Trust registration and trust-score updates are controlled by a single
+  administrator, so the current design is centralized rather than
+  decentralized.
+- The trust update rules and access thresholds are manually defined for
+  demonstration purposes and are not derived from empirical data or adaptive
+  learning.
+- Access decisions are based on a single trust score and do not yet
+  incorporate richer contextual factors such as task type, evidence quality,
+  or historical uncertainty.
+- The current prototype does not address stronger adversarial concerns such as
+  Sybil attacks, collusion, or forged interaction evidence.
+- Validation in this submission is limited to local compilation and automated
+  tests, rather than public-network deployment or large-scale experimental
+  evaluation.
 
 ## Main Features
 
@@ -25,16 +61,20 @@ This project is intended as a minimal research prototype rather than a productio
 The trust score is maintained within the range of 0 to 100.
 
 - If an interaction is successful and compliant, the trust score increases by 10
-- If an interaction is successful but non-compliant, the trust score decreases by 10
+- If an interaction is successful but non-compliant, the trust score decreases
+  by 10
 - If an interaction fails, the trust score decreases by 20
 
 ## Access Control Rules
 
 The contract applies layered access control based on the current trust score.
 
-- If the trust score is below 50, both normal and sensitive operations are denied
-- If the trust score is between 50 and 79, normal operations are allowed but sensitive operations are denied
-- If the trust score is 80 or above, both normal and sensitive operations are allowed
+- If the trust score is below 50, both normal and sensitive operations are
+  denied
+- If the trust score is between 50 and 79, normal operations are allowed but
+  sensitive operations are denied
+- If the trust score is 80 or above, both normal and sensitive operations are
+  allowed
 
 ## Events
 
@@ -55,22 +95,28 @@ test/
   TrustAccessControl.ts     # Automated test cases
 
 scripts/
-  deploy.ts                 # Local deployment script
+  deploy.ts                 # Optional local deployment script for future extension
 ```
 
 ## Requirements
 
-- Node.js
-- npm
-- Hardhat
-- Solidity compiler managed through Hardhat
+- Node.js and npm
+- No global Hardhat installation is required
+- Install project dependencies locally with `npm install`
+- Verified locally with Node.js `v24.13.1` and npm `11.8.0`
 
-## How to Run
+## Verified Reproduction Steps
 
 Enter the project directory:
 
 ```cmd
-cd /d D:\project
+cd <project-directory>
+```
+
+Install dependencies:
+
+```cmd
+npm install
 ```
 
 Compile the contract:
@@ -85,12 +131,6 @@ Run the test suite:
 npm test
 ```
 
-Deploy the contract locally:
-
-```cmd
-npx hardhat run scripts/deploy.ts
-```
-
 ## Current Status
 
 - The contract compiles successfully
@@ -101,14 +141,19 @@ npx hardhat run scripts/deploy.ts
 
 ## Notes
 
-- The current deployment script is mainly intended for local Hardhat testing
-- This project focuses on demonstrating the core idea of trust-aware access control
-- The prototype can be extended in the future with multi-dimensional trust models, weighted evidence, or public testnet deployment
+- The verified workflow for this submission is `install -> compile -> test`
+- The current deployment script is included for local experimentation and future
+  extension, but it is not part of the verified submission workflow
+- This project focuses on demonstrating the core idea of trust-aware access
+  control
+- The prototype can be extended in the future with multi-aspect trust
+  models, weighted evidence, or public testnet deployment
 
 ## Future Work
 
 Possible extensions include:
-- Multi-dimensional trust evaluation
+
+- Multi-aspect trust evaluation
 - Weighted interaction evidence
 - More fine-grained access policies
 - Testnet deployment and verification

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "hardhat compile",
-    "test": "hardhat test"
+    "test": "hardhat test",
+    "format": "prettier --write ."
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "^4.0.6",
@@ -15,8 +16,8 @@
     "@nomicfoundation/hardhat-keystore": "^3.0.5",
     "@nomicfoundation/hardhat-mocha": "^3.0.13",
     "@nomicfoundation/hardhat-network-helpers": "^3.0.4",
-    "@nomicfoundation/hardhat-typechain": "^3.0.4",
     "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-typechain": "^3.0.4",
     "@nomicfoundation/hardhat-verify": "^3.0.12",
     "@nomicfoundation/ignition-core": "^3.0.9",
     "@types/chai": "^5.2.3",
@@ -27,6 +28,8 @@
     "ethers": "^6.14.0",
     "hardhat": "^3.0.0",
     "mocha": "^11.0.0",
+    "prettier": "^3.8.1",
+    "prettier-plugin-solidity": "^2.3.1",
     "typescript": "^5.8.0"
   }
 }
