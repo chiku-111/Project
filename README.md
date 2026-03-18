@@ -24,11 +24,6 @@ production-ready system.
 - It is not designed as decentralized governance or a production-grade
   permission system.
 
-In the current contract, both agent registration and trust updates are
-performed by the admin. That centralization is intentional for this prototype
-because the focus is the trust evaluation flow, not decentralized
-coordination.
-
 ## Limitations
 
 This prototype has several intentional limitations.
@@ -42,8 +37,6 @@ This prototype has several intentional limitations.
 - Access decisions are based on a single trust score and do not yet
   incorporate richer contextual factors such as task type, evidence quality,
   or historical uncertainty.
-- The current prototype does not address stronger adversarial concerns such as
-  Sybil attacks, collusion, or forged interaction evidence.
 - Validation in this submission is limited to local compilation and automated
   tests, rather than public-network deployment or large-scale experimental
   evaluation.
