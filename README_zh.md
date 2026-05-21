@@ -22,7 +22,7 @@
 - 重点是演示 `trust-based access logic`
 - 不是去中心化治理系统，也不是生产级权限系统
 
-## Limitations
+## 局限性
 
 当前原型存在以下有意保留的局限性：
 
